@@ -1,14 +1,12 @@
 /*first load my web site*/
 $(window).on('load', function () {
     //call main function after 1s
-    setTimeout(() => {
-        main();
-    }, 1000);
+    main();
     /*preloader*/
     /*load all images first*/
-    let update = 0;
-    let imagesSrc = new Array();
-    imagesSrc = ["/Assests/images/abt-3.jpg"
+    var update = 0;
+    // let imagesSrc = new Array();
+    var imagesSrc = ["/Assests/images/abt-3.jpg"
         , "/Assests/images/computer-472016_1920-360x380.jpg", "/Assests/images/ecommerce-cover-2.jpg"
         , "/Assests/images/office-1209640_1920-1-360x380.jpg", "/Assests/images/port2-5-360x380.jpg"
         , "/Assests/images/port2-370x390.jpg", "/Assests/images/service-bg.jpg"
@@ -30,8 +28,7 @@ $(window).on('load', function () {
                 $('.preloader').delay(2000).fadeOut('slow', function () {
                     $('.body_content').fadeIn('slow');  //To show web content
 
-                    //AOS.init({ duration: 800, }); //start AOS animation
-
+                    AOS.init({ duration: 800, }); //start AOS animation
                     /*after load images start with slick slider library*/
                     $('.img_container').not('.slick-initialized').slick({
                         slidesToShow: 1,
@@ -59,6 +56,7 @@ $(window).on('load', function () {
                             }
                         }]
                     });
+
                 });
             }
         });
@@ -371,9 +369,9 @@ $(window).on('load', function () {
                 if (user != null) {
                     uid = user.uid;
                     // if user is already signed in go to main page
-                    if (window.location.pathname != "/index.html") {
+                    /*if (window.location.pathname != "/index.html") {
                         window.location.replace("index.html");
-                    }
+                    }*/
                 }
                 var firebaseRefKey = firebase.database().ref().child(uid);
                 /*first get all variables from database
@@ -437,7 +435,7 @@ $(window).on('load', function () {
                 if (window.location.pathname != "/form.html") {
                     setTimeout(function () {
                         window.location.replace("form.html");
-                    }, 0);
+                    }, 1000);
                 }
             }
         });

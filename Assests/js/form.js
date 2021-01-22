@@ -116,6 +116,7 @@ function showPassLog() {
 }
 function showPassSI() {
     (password.type === "password") ? password.type = "text" : password.type = "password";
+    (password_confirm.type === "password") ? password_confirm.type = "text" : password_confirm.type = "password";
 }
 
 //Put all inputs in if statement to prevent event listner error in the main page
@@ -279,6 +280,8 @@ function verifyValidate(input) {
 function signUp() {
     //first remove spaces
     var userFullName = username.value.trim();
+    console.log(userFullName);
+
     var userEmail = email.value.trim();
     var userPassword = password.value.trim();
     // if input no validate >> focus on it and go to validation function
@@ -309,7 +312,6 @@ function signUp() {
                 bodyStyle2: '#f9f9f9',
                 primaryStyle: '#0c65ed',
                 checkDark: true
-
             }
             //Save user data on RealTime Database
             firebaseRef.child(uid).set(userData);
@@ -353,7 +355,6 @@ function signIn() {
                 type: 'success',
                 title: 'successfull',
                 text: 'Succesfully signed in',
-                showConfirmButton: false
             }
             ).then((value) => {
                 setTimeout(function () {

@@ -1,22 +1,23 @@
 :root {
-    /* --color-primary: #0c65ed; */
-    --color-secondary: #666666;
-    /* --bg-color-primary: #0c65ed; */
-    --bg-color-primary-alpha: rgba(12, 101, 237, 0.5);
-    /* --bg-color-secondary: #f9f9f9; */
-    --color-black: black;
+    /*these colors is saved in database , i kept it to avoid any error of database*/
+    --color-primary: #0c65ed;
+    --bg-color-primary: #0c65ed;
+    --bg-color-secondary: #f9f9f9;
     --color-theme-black: black;
+    --header-gradient: rgba(255, 255, 255, 0.4);
+    --body-gradient: rgb(255, 255, 255);
+    /*shadow*/
+    --shadow-black: 0 16px 26px -10px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+    /*********************************************/
+    --color-secondary: #666666;
+    --bg-color-primary-alpha: rgba(12, 101, 237, 0.5);
+    --color-black: black;
     --color-black-alpha: rgba(0, 0, 0, 0.7);
     --color-white: rgb(255, 255, 255);
-    /* --header-gradient: rgba(255, 255, 255, 0.4); */
-    /* --body-gradient: rgb(255, 255, 255); */
     /*transition*/
     --transition-out: all 0.4s cubic-bezier(0.6, -0.28, 0.735, 0.045);
     --transition-in: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     --transition-hover: 0.3s all;
-    /*shadow*/
-    --shadow-primary: 0 16px 26px -10px rgba(12, 101, 237, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(12, 101, 237, 0.2);
-    --shadow-black: 0 16px 26px -10px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
     /*------------------------------------*\ 
       $navbar settings 
     \*------------------------------------*/
@@ -1452,4 +1453,17 @@ input:focus {
 .message a {
     color: #4CAF50 !important;
     background: transparent;
+}
+
+@media only screen and (max-width: 576px) {
+    #container, #content {
+        width: 90%;
+    }
+    .container-body .input {
+        width: 90%;
+    }
+    .message {
+        width: 90%;
+        margin: 10%;
+    }
 }
