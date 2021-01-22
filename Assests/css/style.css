@@ -1329,7 +1329,6 @@ body::-webkit-scrollbar-thumb, .setting>ul::-webkit-scrollbar-thumb {
     display: none;
     margin: auto;
     width: 400px;
-    height: 500px;
     position: relative;
 }
 
@@ -1464,6 +1463,16 @@ input:focus {
     }
     .message {
         width: 90%;
-        margin: 10%;
+        margin: 0 10%;
+    }
+}
+
+@media only screen and (max-height: 503px) {
+    #content {
+        padding: 0;
+    }
+    .container-body .input {
+        margin: 0.25rem auto;
+        padding: 4px;
     }
 }
