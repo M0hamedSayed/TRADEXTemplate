@@ -1,0 +1,97 @@
+/* @screen width 1920 px  for support 2k , 4k screen*/
+
+@media only screen and (max-width: 1100px) {
+    .about .position-absolute {
+        width: 67% !important;
+    }
+}
+
+@media only screen and (max-width: 993px) {
+    .about .position-absolute {
+        width: 50% !important;
+    }
+    .nav_right {
+        border-top: 5px solid var(--color-primary);
+        border-radius: 0 0 2rem 2rem;
+        background-color: var(--color-white);
+        padding-left: 1rem;
+        padding-bottom: 0.75rem;
+    }
+    .mw-80 {
+        max-width: 95%;
+    }
+    .card-group {
+        -ms-flex-direction: column;
+        flex-direction: column;
+    }
+    .card-deck .card, .card-group>.card {
+        flex-wrap: wrap;
+        flex: 0 1 60%;
+        margin: 15px auto !important;
+        text-align: center;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .about .position-absolute {
+        width: 75% !important;
+    }
+    .price_btn {
+        font-size: 1rem;
+    }
+    .setting {
+        width: 320px;
+    }
+    .btn-options-active {
+        left: 340px;
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    .about .position-absolute {
+        width: 100% !important;
+        position: static !important;
+    }
+    img {
+        width: 100%;
+    }
+    .team img, .tesi img {
+        width: auto;
+    }
+    .preloader img {
+        width: 80px;
+    }
+    .preloader svg {
+        width: 200px;
+        height: 200px;
+    }
+    h3, h2 {
+        text-align: center;
+        font-size: 2.2rem !important;
+    }
+    .wave {
+        width: 60px;
+        top: 15px;
+    }
+    .wave2 {
+        top: -30px;
+    }
+    .slick-dots {
+        top: 95%;
+        right: 50%;
+        display: flex;
+        transform: translate(50%, 0);
+    }
+    .btn-options {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 370px) {
+    .creative-overlay {
+        bottom: -150px;
+    }
+    html {
+        font-size: 14px;
+    }
+}
