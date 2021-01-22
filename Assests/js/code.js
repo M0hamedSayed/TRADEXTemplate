@@ -435,7 +435,7 @@ $(window).on('load', function () {
                 if (window.location.pathname != "/form.html") {
                     setTimeout(function () {
                         window.location.replace("form.html");
-                    }, 1000);
+                    }, 0);
                 }
             }
         });
