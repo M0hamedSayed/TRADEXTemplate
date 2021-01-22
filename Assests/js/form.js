@@ -1,4 +1,69 @@
+$(window).on('load', function () {
+    //preloader
+    //load all images first
+    var update = 0;
+    // let imagesSrc = new Array();
+    var imagesSrc = ["/Assests/images/abt-3.jpg"
+        , "/Assests/images/computer-472016_1920-360x380.jpg", "/Assests/images/ecommerce-cover-2.jpg"
+        , "/Assests/images/office-1209640_1920-1-360x380.jpg", "/Assests/images/port2-5-360x380.jpg"
+        , "/Assests/images/port2-370x390.jpg", "/Assests/images/service-bg.jpg"
+        , "/Assests/images/slider1.jpg", "/Assests/images/slider3.jpg"
+        , "/Assests/images/suit-869380_1920-360x380.jpg", "/Assests/images/bg1-360x260.jpg"
+        , "/Assests/images/testi-avtar-1.jpg", "/Assests/images/testi-avtar-2.jpg"
+        , "/Assests/images/testi-avtar-3.jpg", "/Assests/images/testi-avtar-4.jpg"
+        , "/Assests/images/testi-avtar-5.jpg", "/Assests/images/bg3-360x260.jpg"
+        , "/Assests/images/team1.png", "/Assests/images/team2.png"
+        , "/Assests/images/team3.png", "/Assests/images/team4.png"
+        , "/Assests/images/team5.png", "/Assests/images/team6.png"
+        , "/Assests/images/gallery2-1-360x260.png"
+    ]
 
+    // var imagesToPreload = document.querySelectorAll('.body_content img');
+    function preloadImage(no) {
+        new ImagePreloader(imagesSrc[no], function () {
+            if (imagesSrc.length === update) {
+                $('.preloader').delay(2000).fadeOut('slow', function () {
+                    $('.body_content').fadeIn('slow');  //To show web content
+
+                    AOS.init({ duration: 800, }); //start AOS animation
+                    //after load images start with slick slider library
+                    $('.img_container').not('.slick-initialized').slick({
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        autoplay: true,
+                        autoplaySpeed: 3000,
+                        initialSlide: 0,
+                        arrows: false,
+                        dots: true,
+                        pauseOnHover: true
+                    });
+                    $('.tesi').not('.slick-initialized').slick({
+                        slidesToShow: 2,
+                        slidesToScroll: 1,
+                        autoplay: true,
+                        autoplaySpeed: 5000,
+                        initialSlide: 0,
+                        arrows: true,
+                        dots: false,
+                        pauseOnHover: true,
+                        responsive: [{
+                            breakpoint: 993,
+                            settings: {
+                                slidesToShow: 1
+                            }
+                        }]
+                    });
+
+                });
+            }
+        });
+    }
+    //looping in all images to detect last image loaded
+    for (var i = 0; i < imagesSrc.length; i++) {
+        update++;
+        preloadImage(i);
+    }
+});
 //animate log in and signup form 
 function logAnimate() {
     $('.form').animate({ height: "toggle", opacity: "toggle" }, 1000, 'linear');
@@ -29,8 +94,8 @@ $('.message a').click(function () {
 $('#form_button').click(function () {
     $('#form_button').fadeOut("slow", function () {
         $("#container").fadeIn();
-        TweenMax.from("#container", .4, { scale: 0, ease: Sine.easeInOut });
-        TweenMax.to("#container", .4, { scale: 1, ease: Sine.easeInOut });
+        TweenMax.from("#container", .2, { scale: 0, ease: Sine.easeInOut });
+        TweenMax.to("#container", .2, { scale: 1, ease: Sine.easeInOut });
         //start focus with first input
         userSIEmail.focus();
     });
@@ -131,21 +196,26 @@ allInputs.forEach(e => {
             blurAll();
         }, true);
         //key event >> enter
-        addElementMulti([userSIEmail, userSIPassword], "keyup", (event) => {
-            if (event.keyCode === 13) {
-                event.preventDefault();
-                signIn();
-            }
-        }, true);
-        addElementMulti([username, email, password, password_confirm], "keyup", (event) => {
-            if (event.keyCode === 13) {
-                event.preventDefault();
-                signUp();
-            }
-        }, true);
+
+
     }
 });
 
+function searchKeyPress(e) {
+    // look for window.event in case event isn't passed in
+    e = e || window.event;
+    if (e.keyCode == 13) {
+        var name = document.getElementById("head").innerHTML;
+        if (name == "Log In") {
+            document.getElementById('login').click();
+            return false;
+        } else if (name == "Register") {
+            document.getElementById('signup').click();
+            return false;
+        }
+    }
+    return true;
+}
 
 // validation function (register form)
 function Validate() {
@@ -351,11 +421,9 @@ function signIn() {
     }
     else {
         firebase.auth().signInWithEmailAndPassword(SIEmail, SIPassword).then((success) => {
-            swal({
-                type: 'success',
-                title: 'successfull',
-                text: 'Succesfully signed in',
-            }
+            // window.location.replace("index.html");
+
+            swal('successfull', 'Succesfully signed in',
             ).then((value) => {
                 setTimeout(function () {
                     window.location.replace("index.html");
@@ -386,8 +454,7 @@ function signOut() {
             icon: 'success',
             title: 'successfull',
             text: 'signed out',
-            showConfirmButton: false,
-            timer: 1500
+            showConfirmButton: false
         }
         ).then((value) => {
             setTimeout(function () {

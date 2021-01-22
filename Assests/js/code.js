@@ -1,72 +1,7 @@
 /*first load my web site*/
 $(window).on('load', function () {
-    //call main function after 1s
+    //call main function
     main();
-    /*preloader*/
-    /*load all images first*/
-    var update = 0;
-    // let imagesSrc = new Array();
-    var imagesSrc = ["/Assests/images/abt-3.jpg"
-        , "/Assests/images/computer-472016_1920-360x380.jpg", "/Assests/images/ecommerce-cover-2.jpg"
-        , "/Assests/images/office-1209640_1920-1-360x380.jpg", "/Assests/images/port2-5-360x380.jpg"
-        , "/Assests/images/port2-370x390.jpg", "/Assests/images/service-bg.jpg"
-        , "/Assests/images/slider1.jpg", "/Assests/images/slider3.jpg"
-        , "/Assests/images/suit-869380_1920-360x380.jpg", "/Assests/images/bg1-360x260.jpg"
-        , "/Assests/images/testi-avtar-1.jpg", "/Assests/images/testi-avtar-2.jpg"
-        , "/Assests/images/testi-avtar-3.jpg", "/Assests/images/testi-avtar-4.jpg"
-        , "/Assests/images/testi-avtar-5.jpg", "/Assests/images/bg3-360x260.jpg"
-        , "/Assests/images/team1.png", "/Assests/images/team2.png"
-        , "/Assests/images/team3.png", "/Assests/images/team4.png"
-        , "/Assests/images/team5.png", "/Assests/images/team6.png"
-        , "/Assests/images/gallery2-1-360x260.png"
-    ]
-
-    // var imagesToPreload = document.querySelectorAll('.body_content img');
-    function preloadImage(no) {
-        new ImagePreloader(imagesSrc[no], function () {
-            if (imagesSrc.length === update) {
-                $('.preloader').delay(2000).fadeOut('slow', function () {
-                    $('.body_content').fadeIn('slow');  //To show web content
-
-                    AOS.init({ duration: 800, }); //start AOS animation
-                    /*after load images start with slick slider library*/
-                    $('.img_container').not('.slick-initialized').slick({
-                        slidesToShow: 1,
-                        slidesToScroll: 1,
-                        autoplay: true,
-                        autoplaySpeed: 3000,
-                        initialSlide: 0,
-                        arrows: false,
-                        dots: true,
-                        pauseOnHover: true
-                    });
-                    $('.tesi').not('.slick-initialized').slick({
-                        slidesToShow: 2,
-                        slidesToScroll: 1,
-                        autoplay: true,
-                        autoplaySpeed: 5000,
-                        initialSlide: 0,
-                        arrows: true,
-                        dots: false,
-                        pauseOnHover: true,
-                        responsive: [{
-                            breakpoint: 993,
-                            settings: {
-                                slidesToShow: 1
-                            }
-                        }]
-                    });
-
-                });
-            }
-        });
-    }
-    /*looping in all images to detect last image loaded*/
-    for (var i = 0; i < imagesSrc.length; i++) {
-        update++;
-        preloadImage(i);
-
-    }
     /*****************************************************************************************/
     //before slider change image >> hide this current and next image'overlay
     $('.img_container').on('beforeChange', function (event, slick, currentSlide, nextSlide) {
@@ -313,31 +248,7 @@ $(window).on('load', function () {
         bodyStyle2 = "",
         primaryStyle = "";
 
-    //to set all colors to dark mode if i clicked and vise versa
-    //and start saving these colors to variables to prevent null
-    function darkTheme() {
-        if (checkDark) {
-            headerStyle = 'rgba(255, 255, 255, 0.4)';
-            bodyStyle1 = 'rgb(255, 255, 255)';
-            bodyStyle2 = '#f9f9f9';
-            rootVar.setProperty('--body-gradient', 'rgb(255, 255, 255)');
-            rootVar.setProperty('--header-gradient', 'rgba(255, 255, 255, 0.4)');
-            rootVar.setProperty('--color-white', 'rgb(255, 255, 255)');
-            rootVar.setProperty('--bg-color-secondary', '#f9f9f9');
-            rootVar.setProperty('--color-theme-black', 'black');
-            rootVar.setProperty('--shadow-black', '0 16px 26px -10px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2)');
-        } else {
-            headerStyle = 'rgba(0, 0, 0, 0.6)';
-            bodyStyle1 = 'rgb(0, 0, 0)';
-            bodyStyle2 = '#3a3a3a';
-            rootVar.setProperty('--body-gradient', 'rgb(0, 0, 0)');
-            rootVar.setProperty('--header-gradient', 'rgba(0, 0, 0, 0.6)');
-            rootVar.setProperty('--color-white', 'rgb(196, 196, 196)');
-            rootVar.setProperty('--bg-color-secondary', '#3a3a3a');
-            rootVar.setProperty('--color-theme-black', 'white');
-            rootVar.setProperty('--shadow-black', '0 16px 26px -10px rgba(255, 255, 255, 0.56), 0 4px 25px 0px rgba(255, 255, 255, 0.12), 0 8px 10px -5px rgba(255, 255, 255, 0.2)');/////////
-        }
-    }
+
 
     //all these functions to set colors and return these colors to sve it on variables to save in database if i need
     function headerGradient() {
@@ -358,88 +269,7 @@ $(window).on('load', function () {
         return newBGColor2;
     }
 
-    //call this main function when window loaded
-    function main() {
-        // Get data from server and show in the page
-        firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-                //   User is signed in.
-                var user = firebase.auth().currentUser;
-                var uid
-                if (user != null) {
-                    uid = user.uid;
-                    // if user is already signed in go to main page
-                    /*if (window.location.pathname != "/index.html") {
-                        window.location.replace("index.html");
-                    }*/
-                }
-                var firebaseRefKey = firebase.database().ref().child(uid);
-                /*first get all variables from database
-                    >>get checkdark boolean to set it's colors if active and vice versa
-                    >>after this call darktheme() to brevent null
-                  Next set all colors to page from database and darktheme() 
-                 */
-                firebaseRefKey.on('value', (dataSnapShot) => {
-                    var val = dataSnapShot.val();
-                    var name = val.userFullName;
-                    checkDark = val.checkDark;
-                    darkTheme();
-                    headerStyle = val.headerStyle;
-                    bodyStyle1 = val.bodyStyle1;
-                    bodyStyle1 = val.bodyStyle2;
-                    primaryStyle = val.primaryStyle;
-                    rootVar.setProperty("--header-gradient", val.headerStyle);
-                    rootVar.setProperty("--body-gradient", val.bodyStyle1);
-                    rootVar.setProperty("--bg-color-secondary", val.bodyStyle2);
-                    rootVar.setProperty("--color-primary", val.primaryStyle);
-                    rootVar.setProperty("--bg-color-primary", val.primaryStyle);
-                    //reset darkmode button
-                    (checkDark) ? $('.dark-mode').addClass('off-fixed') : $('.dark-mode').removeClass('off-fixed');
-                    var box = document.getElementById("box");
-                    // if statement to prevent error 
-                    if (box) {
-                        // Get username and display it 
-                        box.innerText = name;
-                        // After 5s remove name and show emotion
-                        setTimeout(() => {
-                            box.innerHTML = `<h5 id="nam" class="m-0"><span>
-                                    <i class="far fa-grin-stars"></i>
-                                </span></h5>`;
-                        }, 5000);
-                    }
-                    var uidName = document.querySelector(".uid_name");
-                    // if statement to prevent error 
-                    if (uidName) {
-                        // Get username and display it
-                        uidName.innerText = name;
-                    }
-                })
 
-                //when clicked on save theme get all variables and save it in realtime database on firebase
-                $('.save_theme').on('click', function () {
-                    swal('successfull', 'All Style colors are saved',
-                    ).then((value) => {
-                        setTimeout(function () {
-                            firebaseRefKey.update({
-                                headerStyle: headerStyle,
-                                bodyStyle1: bodyStyle1,
-                                bodyStyle2: bodyStyle2,
-                                primaryStyle: primaryStyle,
-                                checkDark: checkDark
-                            });
-                        }, 500)
-                    });
-                });
-            } else {
-                //   If user is not logged in. >> goto form page
-                if (window.location.pathname != "/form.html") {
-                    setTimeout(function () {
-                        window.location.replace("form.html");
-                    }, 0);
-                }
-            }
-        });
-    }
 
     /*add multi elements with one event*/
     function addElementMulti(el, s, fn) {
@@ -531,9 +361,117 @@ $(window).on('load', function () {
     }
     setInterval(mousebox, 100);
 
+
+    //to set all colors to dark mode if i clicked and vise versa
+    //and start saving these colors to variables to prevent null
+    function darkTheme() {
+        if (checkDark) {
+            headerStyle = 'rgba(255, 255, 255, 0.4)';
+            bodyStyle1 = 'rgb(255, 255, 255)';
+            bodyStyle2 = '#f9f9f9';
+            rootVar.setProperty('--body-gradient', 'rgb(255, 255, 255)');
+            rootVar.setProperty('--header-gradient', 'rgba(255, 255, 255, 0.4)');
+            rootVar.setProperty('--color-white', 'rgb(255, 255, 255)');
+            rootVar.setProperty('--bg-color-secondary', '#f9f9f9');
+            rootVar.setProperty('--color-theme-black', 'black');
+            rootVar.setProperty('--shadow-black', '0 16px 26px -10px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2)');
+        } else {
+            headerStyle = 'rgba(0, 0, 0, 0.6)';
+            bodyStyle1 = 'rgb(0, 0, 0)';
+            bodyStyle2 = '#3a3a3a';
+            rootVar.setProperty('--body-gradient', 'rgb(0, 0, 0)');
+            rootVar.setProperty('--header-gradient', 'rgba(0, 0, 0, 0.6)');
+            rootVar.setProperty('--color-white', 'rgb(196, 196, 196)');
+            rootVar.setProperty('--bg-color-secondary', '#3a3a3a');
+            rootVar.setProperty('--color-theme-black', 'white');
+            rootVar.setProperty('--shadow-black', '0 16px 26px -10px rgba(255, 255, 255, 0.56), 0 4px 25px 0px rgba(255, 255, 255, 0.12), 0 8px 10px -5px rgba(255, 255, 255, 0.2)');/////////
+        }
+    }
+    //call this main function when window loaded
+    function main() {
+        // Get data from server and show in the page
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                //   User is signed in.
+                var user = firebase.auth().currentUser;
+                var uid
+                if (user != null) {
+                    uid = user.uid;
+                    // if user is already signed in go to main page
+                    /*if (window.location.pathname != "/index.html") {
+                        window.location.replace("index.html");
+                    }*/
+                }
+                var firebaseRefKey = firebase.database().ref().child(uid);
+                /*first get all variables from database
+                    >>get checkdark boolean to set it's colors if active and vice versa
+                    >>after this call darktheme() to brevent null
+                  Next set all colors to page from database and darktheme() 
+                 */
+                firebaseRefKey.on('value', (dataSnapShot) => {
+                    var val = dataSnapShot.val();
+                    var name = val.userFullName;
+                    checkDark = val.checkDark;
+                    darkTheme();
+                    headerStyle = val.headerStyle;
+                    bodyStyle1 = val.bodyStyle1;
+                    bodyStyle1 = val.bodyStyle2;
+                    primaryStyle = val.primaryStyle;
+                    rootVar.setProperty("--header-gradient", val.headerStyle);
+                    rootVar.setProperty("--body-gradient", val.bodyStyle1);
+                    rootVar.setProperty("--bg-color-secondary", val.bodyStyle2);
+                    rootVar.setProperty("--color-primary", val.primaryStyle);
+                    rootVar.setProperty("--bg-color-primary", val.primaryStyle);
+                    //reset darkmode button
+                    (checkDark) ? $('.dark-mode').addClass('off-fixed') : $('.dark-mode').removeClass('off-fixed');
+                    var box = document.getElementById("box");
+                    // if statement to prevent error 
+                    if (box) {
+                        // Get username and display it 
+                        box.innerText = name;
+                        // After 5s remove name and show emotion
+                        setTimeout(() => {
+                            box.innerHTML = `<h5 id="nam" class="m-0"><span>
+                                <i class="far fa-grin-stars"></i>
+                            </span></h5>`;
+                        }, 5000);
+                    }
+                    var uidName = document.querySelector(".uid_name");
+                    // if statement to prevent error 
+                    if (uidName) {
+                        // Get username and display it
+                        uidName.innerText = name;
+                    }
+                })
+
+                //when clicked on save theme get all variables and save it in realtime database on firebase
+                $('.save_theme').on('click', function () {
+                    swal('successfull', 'All Style colors are saved',
+                    ).then((value) => {
+                        setTimeout(function () {
+                            firebaseRefKey.update({
+                                headerStyle: headerStyle,
+                                bodyStyle1: bodyStyle1,
+                                bodyStyle2: bodyStyle2,
+                                primaryStyle: primaryStyle,
+                                checkDark: checkDark
+                            });
+                        }, 500)
+                    });
+                });
+            } else {
+                //   If user is not logged in. >> goto form page
+                if (window.location.pathname != "/form.html") {
+                    setTimeout(function () {
+                        window.location.replace("form.html");
+                    }, 0);
+                }
+            }
+        });
+    }
+
 });
 /************************************************************************************************/
-
 
 
 

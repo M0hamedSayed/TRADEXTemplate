@@ -48,20 +48,22 @@
 
                         <div id="email-log">
                             <input id="userSIEmail" class="input" type="email" name="email" placeholder="E-mail"
-                                autocomplete="on" pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$">
+                                autocomplete="on" pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$"
+                                onkeypress="return searchKeyPress(event);">
                             <div id="email_err" class="text-center"></div>
                         </div>
 
                         <div id="password-log">
                             <input id="userSIPassword" class="input" type="password" name="pass" placeholder="Password"
-                                autocomplete="off" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                                autocomplete="off" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                                onkeypress="return searchKeyPress(event);">
                             <div id="password_err" class="text-center px-2"></div>
                         </div>
                         <div class="d-flex align-items-center justify-content-center mt-sm-4 mt-1">
                             <input type="checkbox" onclick="showPassLog()">
                             <p class="clr-white pl-2">Show Password</p>
                         </div>
-                        <input onclick="signIn()" class="bttn input" type="button" value="Log in">
+                        <input onclick="signIn()" id="login" class="bttn input" type="button" value="Log in">
 
                         <p class="message text-center">Not registered? <a>Create an account</a></p>
 
@@ -72,25 +74,28 @@
 
                         <div id="username_div">
                             <input type="text" id="userFullName" name="name" placeholder="Full Name" class="input"
-                                autocomplete="off" />
+                                autocomplete="off" onkeypress="return searchKeyPress(event);" />
                             <div id="name_error" class="text-center"></div>
                         </div>
 
                         <div id="email_div">
                             <input type="email" id="userEmail" name="email" placeholder="E-mail address" class="input"
-                                autocomplete="off" pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" />
+                                autocomplete="off" pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$"
+                                onkeypress="return searchKeyPress(event);" />
                             <div id="email_error" class=" text-center""></div>
                         </div>
     
                         <div id=" password_div">
                                 <input type="password" id="userPassword" name="pass" placeholder="password"
-                                    autocomplete="off" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" class="input" />
+                                    autocomplete="off" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" class="input"
+                                    onkeypress="return searchKeyPress(event);" />
                                 <div id="password_error" class=" text-center"></div>
                             </div>
 
                             <div id="pass_confirm_div">
                                 <input type="password" id="userPassword-confirm" class="input" name="pass-confirm"
-                                    autocomplete="off" placeholder="Re-type password" />
+                                    autocomplete="off" placeholder="Re-type password"
+                                    onkeypress="return searchKeyPress(event);" />
                                 <div id="password_error_confirm" class="text-center px-2"></div>
                             </div>
                             <div class="d-flex align-items-center justify-content-center mt-md-4 mt-1">
@@ -98,7 +103,7 @@
                                 <p class="clr-white pl-2">Show Password</p>
                             </div>
 
-                            <input class="bttn input" type="button" value="Sign UP" onclick="signUp()">
+                            <input class="bttn input" id="signup" type="button" value="Sign UP" onclick="signUp()">
 
                             <p class="message text-center">Already registered? <a>Sign In</a></p>
                     </form>
@@ -128,7 +133,6 @@
     <script src="/Assests/js/image-preloader.js"></script>
     <script src="/Assests/js/sweetalert.js"></script>
     <script src="/Assests/js/form.js"></script>
-    <script src="/Assests/js/code.js"></script>
     <script>
         // Your web app's Firebase configuration
         const firebaseConfig = {
