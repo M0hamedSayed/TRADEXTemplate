@@ -30,6 +30,16 @@
         margin: 15px auto !important;
         text-align: center;
     }
+    nav {
+        overflow-y: auto;
+        max-height: 100%;
+    }
+    .img_container, .img_content {
+        height: calc(100vh - 140px);
+    }
+    #box {
+        display: none;
+    }
 }
 
 @media only screen and (max-width: 768px) {
@@ -87,10 +97,13 @@
     }
 }
 
-@media only screen and (max-width: 370px) {
+@media only screen and (max-width: 442px) {
     .creative-overlay {
         bottom: -150px;
     }
+}
+
+@media only screen and (max-width: 370px) {
     html {
         font-size: 14px;
     }

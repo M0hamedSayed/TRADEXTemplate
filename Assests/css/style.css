@@ -1255,11 +1255,26 @@ svg .outer {
 
 #box {
     position: absolute;
+    left: 50%;
+    top: 50%;
     transition: ease-out 1s;
 }
 
 #box i {
     font-size: 2rem;
+}
+
+.body_contnt {
+    animation: body 1s ease;
+}
+
+@keyframes body {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
 /*------------------------------------*\

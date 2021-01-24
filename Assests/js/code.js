@@ -2,6 +2,69 @@
 $(window).on('load', function () {
     //call main function
     main();
+    //preloader
+    //load all images first
+    var update = 0;
+    // let imagesSrc = new Array();
+    var imagesSrc = ["/Assests/images/abt-3.jpg"
+        , "/Assests/images/computer-472016_1920-360x380.jpg", "/Assests/images/ecommerce-cover-2.jpg"
+        , "/Assests/images/office-1209640_1920-1-360x380.jpg", "/Assests/images/port2-5-360x380.jpg"
+        , "/Assests/images/port2-370x390.jpg", "/Assests/images/service-bg.jpg"
+        , "/Assests/images/slider1.jpg", "/Assests/images/slider3.jpg"
+        , "/Assests/images/suit-869380_1920-360x380.jpg", "/Assests/images/bg1-360x260.jpg"
+        , "/Assests/images/testi-avtar-1.jpg", "/Assests/images/testi-avtar-2.jpg"
+        , "/Assests/images/testi-avtar-3.jpg", "/Assests/images/testi-avtar-4.jpg"
+        , "/Assests/images/testi-avtar-5.jpg", "/Assests/images/bg3-360x260.jpg"
+        , "/Assests/images/team1.png", "/Assests/images/team2.png"
+        , "/Assests/images/team3.png", "/Assests/images/team4.png"
+        , "/Assests/images/team5.png", "/Assests/images/team6.png"
+        , "/Assests/images/gallery2-1-360x260.png"
+    ]
+
+    // var imagesToPreload = document.querySelectorAll('.body_content img');
+    function preloadImage(no) {
+        new ImagePreloader(imagesSrc[no], function () {
+            if (imagesSrc.length === update) {
+                $('.preloader').delay(2000).fadeOut('slow', function () {
+                    $('.body_content').fadeIn('slow');  //To show web content
+                    setInterval(mousebox, 100);
+                    AOS.init({ duration: 800, }); //start AOS animation
+                    //after load images start with slick slider library
+                    $('.img_container').not('.slick-initialized').slick({
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        autoplay: true,
+                        autoplaySpeed: 3000,
+                        initialSlide: 0,
+                        arrows: false,
+                        dots: true,
+                        pauseOnHover: true
+                    });
+                    $('.tesi').not('.slick-initialized').slick({
+                        slidesToShow: 2,
+                        slidesToScroll: 1,
+                        autoplay: true,
+                        autoplaySpeed: 5000,
+                        initialSlide: 0,
+                        arrows: true,
+                        dots: false,
+                        pauseOnHover: true,
+                        responsive: [{
+                            breakpoint: 993,
+                            settings: {
+                                slidesToShow: 1
+                            }
+                        }]
+                    });
+                });
+            }
+        });
+    }
+    //looping in all images to detect last image loaded
+    for (var i = 0; i < imagesSrc.length; i++) {
+        update++;
+        preloadImage(i);
+    }
     /*****************************************************************************************/
     //before slider change image >> hide this current and next image'overlay
     $('.img_container').on('beforeChange', function (event, slick, currentSlide, nextSlide) {
@@ -31,20 +94,17 @@ $(window).on('load', function () {
             $(".burger__input").prop('checked', false);
             $('.navbar-collapse').removeClass('show');
             $('.nav-link').click(function () {
-                $('.dropdown-menu')
-                    .removeClass('show')
-                    .fadeOut(50);
+                $('.dropdown-menu').fadeOut(0).removeClass('show');
                 $('.dropdown').removeClass('show');
-                console.log($('.nxt_drop').length);
                 $(this).next('.dropdown-menu')
                     .stop(true, true)
-                    .fadeIn(50)
+                    .fadeIn(100)
                     .addClass('show');
             });
             $('body').on('click', function (e) {
                 if (!$('.dropdown-menu').is(e.target) && $('.dropdown').has(e.target).length === 0) {
                     $('.dropdown-menu')
-                        .removeClass('show').fadeOut(50);
+                        .fadeOut(0).removeClass('show');
                     $('.dropdown').removeClass('show');
                 }
             });
@@ -181,6 +241,27 @@ $(window).on('load', function () {
 
         }
     });
+    /****************************************************************************************/
+    /*animation when mouse move 
+           >>first detect x and y coordinates of my page.
+           >>then add this coordinator to my box with check every 100ms
+       */
+    if (window.location.pathname != "/form.html") {
+        var x = 0;
+        var y = 0;
+        var page = document.querySelector('body');
+        page.addEventListener('mousemove', function (event) {
+            x = event.pageX;
+            y = event.pageY;
+        });
+        var box = document.getElementById('box');
+        var mousebox = function () {
+            setTimeout(() => {
+                box.style.left = (x + 20) + 'px';
+                box.style.top = (y + 20) + 'px';
+            }, 1000);
+        }
+    }
     /************************************************************************************************/
     // when pressed on back to top button
     $('#button').on('click', function (e) {
@@ -292,7 +373,13 @@ $(window).on('load', function () {
             bodyStyle1 = bodyGradient();
             bodyStyle2 = secondaryColor();
         } else if ($(this).parent().hasClass("template-font")) {
-            primaryStyle = primaryColor();
+            if (typeof (primaryColor) == 'function') {
+                primaryStyle = primaryColor();
+            } else {
+                rootVar.setProperty('--color-primary', newBGColor2);
+                rootVar.setProperty('--bg-color-primary', newBGColor2);
+                primaryStyle = newBGColor2;
+            }
         }
         // add acive on this circle clicked
         $(this).addClass("active_circle")
@@ -339,29 +426,6 @@ $(window).on('load', function () {
         $('.setting').toggleClass('setting-active');
     });
     /************************************************************************************************/
-    /*animation when mouse move 
-        >>first detect x and y coordinates of my page.
-        >>then add this coordinator to my box with check every 100ms
-    */
-    if (window.location.pathname != "/form.html") {
-        var x = 0;
-        var y = 0;
-        var page = document.querySelector('body');
-        page.addEventListener('mousemove', function (event) {
-            x = event.pageX;
-            y = event.pageY;
-        });
-
-        var box = document.getElementById('box');
-
-        var mousebox = function () {
-            box.style.left = (x + 20) + 'px';
-            box.style.top = (y + 20) + 'px';
-        }
-    }
-    setInterval(mousebox, 100);
-
-
     //to set all colors to dark mode if i clicked and vise versa
     //and start saving these colors to variables to prevent null
     function darkTheme() {
@@ -434,7 +498,7 @@ $(window).on('load', function () {
                             box.innerHTML = `<h5 id="nam" class="m-0"><span>
                                 <i class="far fa-grin-stars"></i>
                             </span></h5>`;
-                        }, 5000);
+                        }, 15000);
                     }
                     var uidName = document.querySelector(".uid_name");
                     // if statement to prevent error 
@@ -464,6 +528,7 @@ $(window).on('load', function () {
                 if (window.location.pathname != "/form.html") {
                     setTimeout(function () {
                         window.location.replace("form.html");
+
                     }, 0);
                 }
             }
